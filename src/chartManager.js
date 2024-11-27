@@ -6,8 +6,7 @@ const width = 400; // width of the image
 const height = 400; // height of the image
 const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height });
 
-module.exports = async function drawPieChart(members) {
-
+async function drawPieChart(members) {
     let onlineNums = 0;
     let offlineNums = 0;
     let dndNums = 0;
@@ -49,4 +48,67 @@ module.exports = async function drawPieChart(members) {
     fs.writeFileSync(filePath, image);
     console.log('Pie chart saved as pie-chart.png');
     return filePath;
-} 
+}
+
+async function createBarChart(members) {
+
+    let onlineNums = 0;
+    let offlineNums = 0;
+    let dndNums = 0;
+    let idleNums = 0;
+
+    members.map(member => {
+        if (member.presence) {
+            if (member.presence.status === 'online')
+                onlineNums += 1;
+            else if (member.presence.status === 'dnd')
+                dndNums += 1;
+            else if (member.presence.status === 'idle')
+                idleNums += 1;
+        }
+        else {
+            offlineNums += 1;
+        }
+    });
+
+    const configuration = {
+        type: 'bar', // Bar chart type
+        data: {
+            labels: ['online', 'offline', 'dnd', 'idle'],
+            datasets: [
+                {
+                    data: [onlineNums, offlineNums, dndNums, idleNums],
+                    backgroundColor: ['#FF0000', '#0000FF', '#FFFF00', '#FFFFFF'],
+                    borderColor: ['#FF0000', '#0000FF', '#FFFF00', '#FFFFFF'],
+                    borderWidth: 1,
+                },
+            ],
+        },
+        options: {
+            responsive: false, // Ensures the chart size matches the canvas
+            scales: {
+                y: {
+                    title: {
+                        display: true,
+                        text: 'members-count',
+                    },
+                    beginAtZero: true,
+                },
+            },
+        },
+    };
+
+    // Render chart to a buffer
+    const imageBuffer = await chartJSNodeCanvas.renderToBuffer(configuration);
+
+    // Save to file
+    const filePath = './bar-chart.png'
+    fs.writeFileSync(filePath, imageBuffer);
+    console.log('Bar chart saved as bar-chart.png');
+    return filePath;
+}
+
+module.exports = {
+    drawPieChart,
+    createBarChart
+}
