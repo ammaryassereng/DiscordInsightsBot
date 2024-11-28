@@ -94,10 +94,9 @@ async function createBarChart(members) {
             labels: ['online', 'offline', 'dnd', 'idle'],
             datasets: [
                 {
+                    label: '',
                     data: [onlineNums, offlineNums, dndNums, idleNums],
                     backgroundColor: ['#FF0000', '#0000FF', '#FFFF00', '#FFFFFF'],
-                    borderColor: ['#FF0000', '#0000FF', '#FFFF00', '#FFFFFF'],
-                    borderWidth: 1,
                 },
             ],
         },
@@ -111,6 +110,12 @@ async function createBarChart(members) {
                     },
                     beginAtZero: true,
                 },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Status' // Add title for x-axis
+                    }
+                }
             },
             plugins: {
                 legend: {
