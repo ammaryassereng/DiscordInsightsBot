@@ -1,10 +1,18 @@
 const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
+const { registerFont } = require('canvas');
+
 const fs = require('fs');
+
+registerFont('assets/DejaVuSans.ttf', { family: 'DejaVu Sans' });
+const chartCallback = (ChartJS) => {
+    ChartJS.defaults.font.family = 'DejaVu Sans';
+};
 
 // Create an instance of ChartJSNodeCanvas
 const width = 400; // width of the image
 const height = 400; // height of the image
-const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height });
+const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height, chartCallback });
+
 
 async function drawPieChart(members) {
     let onlineNums = 0;
@@ -37,6 +45,15 @@ async function drawPieChart(members) {
         },
         options: {
             responsive: true,
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            family: 'DejaVu Sans', // Use the registered font
+                        }
+                    }
+                }
+            }
         }
     };
 
@@ -95,6 +112,15 @@ async function createBarChart(members) {
                     beginAtZero: true,
                 },
             },
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            family: 'DejaVu Sans', // Use the registered font
+                        }
+                    }
+                }
+            }
         },
     };
 
