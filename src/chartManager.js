@@ -49,7 +49,7 @@ async function drawPieChart(members) {
                 legend: {
                     labels: {
                         font: {
-                            family: 'DejaVu Sans', // Use the registered font
+                            family: 'DejaVu Sans',
                         }
                     }
                 }
@@ -95,13 +95,13 @@ async function createBarChart(members) {
             datasets: [
                 {
                     label: '',
-                    data: [onlineNums, offlineNums, dndNums, idleNums],
-                    backgroundColor: ['#FF0000', '#0000FF', '#FFFF00', '#FFFFFF'],
+                    data: [onlineNums, offlineNums, dndNums, idleNums],  // data for each section
+                    backgroundColor: ['#FF0000', '#0000FF', '#FFFF00', '#FFFFFF'],   // Colors for each section
                 },
             ],
         },
         options: {
-            responsive: false, // Ensures the chart size matches the canvas
+            responsive: false,
             scales: {
                 y: {
                     title: {
@@ -113,7 +113,7 @@ async function createBarChart(members) {
                 x: {
                     title: {
                         display: true,
-                        text: 'Status' // Add title for x-axis
+                        text: 'Status'
                     }
                 }
             },
@@ -121,7 +121,7 @@ async function createBarChart(members) {
                 legend: {
                     labels: {
                         font: {
-                            family: 'DejaVu Sans', // Use the registered font
+                            family: 'DejaVu Sans',
                         }
                     }
                 }

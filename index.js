@@ -3,7 +3,7 @@ const fs = require('fs');
 require('dotenv').config();
 const { drawPieChart, createBarChart } = require('./src/chartManager');
 
-
+// listing the needed intents for the project
 const client = new Client({
     intents: [
         IntentsBitField.Flags.Guilds,
@@ -14,10 +14,12 @@ const client = new Client({
     ]
 })
 
+// return a message impying that the node.js is connected to the bot
 client.on('ready', (c) => {
     console.log(`${c.user.tag} is online`);
 })
 
+// return a message impying that the node.js app in up and running
 client.on('messageCreate', async (message) => {
     if (message.content === "ping") {
         try {
@@ -28,9 +30,11 @@ client.on('messageCreate', async (message) => {
     }
 })
 
+// list of interactions
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
 
+    // help command
     if (interaction.commandName === 'help') {
         try {
             interaction.reply({
@@ -59,6 +63,7 @@ client.on('interactionCreate', async (interaction) => {
 
     }
 
+    // list command
     if (interaction.commandName === 'list') {
         try {
             let selectedOpt = interaction.options.get('state')?.value;
@@ -88,6 +93,8 @@ client.on('interactionCreate', async (interaction) => {
 
     }
 
+
+    // chart command
     if (interaction.commandName === 'chart') {
         try {
             if (interaction.options.get('type') === null || interaction.options.get('type') === undefined) {
